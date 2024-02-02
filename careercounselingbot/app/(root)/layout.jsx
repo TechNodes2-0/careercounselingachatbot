@@ -1,9 +1,14 @@
-const Layout = ({ children }) => {
-  return (
-    <div className="w-full min-h-screen bg-fixed bg-center bg-cover flex-center bg-primary-50 bg-dotted-pattern">
-      {children}
-    </div>
-  );
-};
+import Navbar from "../../components/shared/Navbar"
 
-export default Layout;
+
+export default function RootLayout({
+  children,
+}) {
+  return (
+    <div className="flex h-screen flex-col">
+      <Navbar />
+      <main className="flex-1">{children}</main>
+   
+    </div>
+  )
+}
