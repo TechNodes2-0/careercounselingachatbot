@@ -1,16 +1,13 @@
 "use server";
+import { connectToDatabase } from "../../database";
+import { User } from "../../database/user.model";
 
-import User from "@/database/user.model";
-
-export async function createUser(userData) {
+export const createUser = async (user) => {
   try {
-    connectToDatabase();
-
-    const newUser = await User.create(userData);
-
-    return newUser;
+    await connectToDatabase();
+    const newUser = await User.create(user);
+    return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    console.log(error);
-    throw error;
+    console.log("Error creating user", error);
   }
-}
+};

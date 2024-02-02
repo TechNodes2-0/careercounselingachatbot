@@ -9,7 +9,7 @@ export default function HeroSection() {
           <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="block text-4xl font-medium text-gray-200 sm:text-5xl md:text-6xl lg:text-7xl">
-                DevRoute: Your Ultimate Technology Roadmap
+                Career Counseling Bot
               </h1>
             </div>
 
