@@ -1,8 +1,9 @@
-"use client";
+"use server";
 import React from "react";
+import {getUserById} from '../../../../lib/actions/user.action';
 // import { useRouter } from 'next/router';
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs";
 
 // Dummy user data
 const dummyUser = {
@@ -15,31 +16,12 @@ const dummyUser = {
   joinedAt: new Date().toISOString(), // Assuming current date for joinedAt
 };
 
-const ProfilePage = () => {
-  // const router = useRouter();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // const fetchUser = async () => {
-    //   try {
-    //     const response = await axios.get(`/api/user/${router.query.id}`); // Assuming you have an API route to fetch user data
-    //     setUser(response.data);
-    //   } catch (error) {
-    //     console.error('Error fetching user:', error);
-    //   }
-    // };
-
-    // if (router.query.id) {
-    //   fetchUser();
-    // }
-
-    // Set dummy user data
-    setUser(dummyUser);
-  }, []);
-
+const ProfilePage = async({params,searchParams}) => {
+  const {userId: clerkId} =auth();
+  const userInfo = await getUserById({userId: params.id});
   return (
     <div className="px-10 pt-8 text-black w-full bg-gray-200 min-h-screen py-10  max-md:px-5">
-      {user ? (
+      {userInfo ? (
         <div>
           <div className="max-w-3xl w-full mx-auto bg-white border-0 rounded-lg ">
             <div className="relative w-full border-0 rounded-sm">
@@ -55,8 +37,8 @@ const ProfilePage = () => {
               />
             </div>
             <div className="pt-14 pb-5 px-10  max-md:px-5">
-              <p className="text-xl font-bold py-1"> {user.name}</p>
-              <p className="text-sm font-semibold py-1"> {user.discription}</p>
+              <p className="text-xl font-bold py-1"> {userInfo.user.name}</p>
+              <p className="text-sm font-semibold py-1"> {dummyUser.discription}</p>
               <p className="text-sm font-medium text-gray-600 py-1">
                 vadodara, Gujrat, India.
               </p>

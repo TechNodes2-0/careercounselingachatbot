@@ -39,3 +39,17 @@ export async function deleteUser(clerkId) {
     console.log("Error deleting user", error);
   }
 }
+
+export async function getUserById(clerkId) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId});
+
+    return JSON.parse(JSON.stringify(user));
+  } catch (error) {
+    console.log(error);
+  }
+}
