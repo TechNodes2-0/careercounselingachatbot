@@ -22,24 +22,23 @@ const HeroSection = () => {
           </h2>
           <div className="grid grid-cols-3 gap-8">
             <a
-              className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center"
+              className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center border border-[#30363d] hover:bg-[#30363d]"
               href="#"
             >
               Frontend
             </a>
             <a
-              className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center"
+              className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center border border-[#30363d] hover:bg-[#30363d]"
               href="#"
             >
               Backend
             </a>
             <a
-              className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center"
+              className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center border border-[#30363d] hover:bg-[#30363d]"
               href="#"
             >
               DevOps
             </a>
-            {/* Add more role-based roadmap links as needed */}
           </div>
         </div>
       </section>
