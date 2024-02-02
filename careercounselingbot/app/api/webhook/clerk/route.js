@@ -75,10 +75,11 @@ export async function POST(req) {
       const user = {
         clerkId: id,
         email: email_addresses[0].email_address,
+        name: `${first_name}${last_name ? ` ${last_name}` : ""}`,
         username: username,
         firstName: first_name,
         lastName: last_name,
-        photo: image_url,
+        picture: image_url,
       };
 
       const newUser = await createUser(user);
@@ -102,7 +103,7 @@ export async function POST(req) {
         firstName: first_name,
         lastName: last_name,
         username: username,
-        photo: image_url,
+        picture: image_url,
       };
 
       const updatedUser = await updateUser(id, user);
