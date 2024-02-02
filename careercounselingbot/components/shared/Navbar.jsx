@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   return (
@@ -182,8 +182,19 @@ export default function Navbar() {
               <div class="flex items-center gap-x-2 sm:ms-auto">
                 {" "}
                 <SignedOut>
-                  <Link href="/sign-in">Sign in</Link>
+                  <Link
+                    className="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500"
+                    href="/sign-in"
+                  >
+                    Sign in
+                  </Link>
                 </SignedOut>
+              </div>
+              <div class="flex items-center gap-x-2 sm:ms-auto">
+                {" "}
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
               </div>
             </div>
           </div>
