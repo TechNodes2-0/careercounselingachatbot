@@ -1,6 +1,10 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
-import { createUser } from "../../../../lib/actions/user.action";
+import {
+  createUser,
+  updateUser,
+  deleteUser,
+} from "../../../../lib/actions/user.action";
 import { clerkClient } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -37,12 +41,7 @@ export async function POST(req) {
   let evt;
 
   // Verify the payload with the headers
-  console.log("Bosy", body);
-  console.log("object", {
-    "svix-id": svix_id,
-    "svix-timestamp": svix_timestamp,
-    "svix-signature": svix_signature,
-  });
+
   try {
     evt = wh.verify(body, {
       "svix-id": svix_id,
