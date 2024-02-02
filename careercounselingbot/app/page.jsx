@@ -1,5 +1,5 @@
 import React from "react";
-import { connectToDatabase } from "../lib/mongoose";
+import { connectToDatabase } from "../database/index";
 import Navbar from "../components/shared/Navbar";
 import HeroSection from "../components/shared/HeroSection";
 function page() {
