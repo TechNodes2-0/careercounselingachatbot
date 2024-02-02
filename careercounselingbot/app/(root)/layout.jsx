@@ -1,9 +1,9 @@
 const Layout = ({ children }) => {
-    return (
-      <div className="flex-center min-h-screen w-full bg-primary-50 bg-dotted-pattern bg-cover bg-fixed bg-center">
-        {children}
-      </div>
-    )
-  }
-  
-  export default Layout
+  return (
+    <div className="w-full min-h-screen bg-fixed bg-center bg-cover flex-center bg-primary-50 bg-dotted-pattern">
+      {children}
+    </div>
+  );
+};
+
+export default Layout;
