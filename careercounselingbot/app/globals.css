@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-gradient {
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(
+    to right,
+    #00ffff,
+    #237ec9
+  ); /* Replace with your desired gradient colors */
+}
