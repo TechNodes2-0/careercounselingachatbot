@@ -1,11 +1,15 @@
 import React from "react";
-
+import Link from "next/link";
 const HeroSection = () => {
   return (
     <div className="bg-[#1a1d23] min-h-screen text-white">
       <header className="py-20 text-center">
-        {/* <div className="inline-block bg-[#2b2d3a] px-4 py-1 rounded-full text-xs font-semibold mb-4">
-          NEW Announcing roadmaps for teams. Learn more!
+        {/* <div className="bg-[#161b22] py-2 px-4 inline-block rounded-md">
+          <span className="text-blue-500">NEW</span> Announcing roadmaps for
+          teams.{" "}
+          <Link className="underline" href="#">
+            Learn more!
+          </Link>
         </div> */}
         <h1 className="mb-4 text-5xl font-bold text-gradient">
           Career Pathways
