@@ -1,14 +1,10 @@
-import Navbar from "../../components/shared/Navbar"
+import Navbar from "../../components/shared/Navbar";
 
-
-export default function RootLayout({
-  children,
-}) {
+export default function RootLayout({ children }) {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex flex-col h-screen">
       <Navbar />
       <main className="flex-1">{children}</main>
-   
     </div>
-  )
+  );
 }
