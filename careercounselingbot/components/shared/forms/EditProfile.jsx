@@ -7,7 +7,6 @@ const EditProfile = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    // You can perform your form submission logic here
   };
 
   return (
