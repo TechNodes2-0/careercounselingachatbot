@@ -1,6 +1,6 @@
 "use server";
 import React from "react";
-import {getUserById} from '../../../../lib/actions/user.action';
+import { getUserById } from "../../../../lib/actions/user.action";
 // import { useRouter } from 'next/router';
 import Link from "next/link";
 import { auth } from "@clerk/nextjs";
@@ -16,42 +16,48 @@ const dummyUser = {
   joinedAt: new Date().toISOString(), // Assuming current date for joinedAt
 };
 
-const ProfilePage = async({params,searchParams}) => {
-  const {userId: clerkId} =auth();
-  const userInfo = await getUserById({userId: params.id});
+const ProfilePage = async ({ params, searchParams }) => {
+  const { userId: clerkId } = auth();
+  const userInfo = await getUserById({ userId: params.id });
   return (
-    <div className="px-10 pt-8 text-black w-full bg-gray-200 min-h-screen py-10  max-md:px-5">
+    <div className="w-full min-h-screen px-10 py-10 pt-8 text-black bg-gray-200 max-md:px-5">
       {userInfo ? (
         <div>
-          <div className="max-w-3xl w-full mx-auto bg-white border-0 rounded-lg ">
+          <div className="w-full max-w-3xl mx-auto bg-white border-0 rounded-lg ">
             <div className="relative w-full border-0 rounded-sm">
               <img
                 src="https://th.bing.com/th/id/OIP.5sZcGKaaTozYowjU7EZ2VgHaEo?rs=1&pid=ImgDetMain"
                 alt=""
-                className=" border-0 rounded-t-lg w-full h-64 max-md:h-44"
+                className="w-full h-64 border-0 rounded-t-lg max-md:h-44"
               />
               <img
-                className="absolute  max-md:w-20 w-24 border-0 rounded-full -bottom-10 left-10  max-md:left-5"
+                className="absolute w-24 border-0 rounded-full max-md:w-20 -bottom-10 left-10 max-md:left-5"
                 src={user.img}
                 alt=""
               />
             </div>
-            <div className="pt-14 pb-5 px-10  max-md:px-5">
-              <p className="text-xl font-bold py-1"> {userInfo.user.name}</p>
-              <p className="text-sm font-semibold py-1"> {dummyUser.discription}</p>
-              <p className="text-sm font-medium text-gray-600 py-1">
+            <div className="px-10 pb-5 pt-14 max-md:px-5">
+              <p className="py-1 text-xl font-bold"> {userInfo.user.name}</p>
+              <p className="py-1 text-sm font-semibold">
+                {" "}
+                {dummyUser.discription}
+              </p>
+              <p className="py-1 text-sm font-medium text-gray-600">
                 vadodara, Gujrat, India.
               </p>
-              <div className="my-5 flex flex-row justify-items-start items-center">
-                <Link href="/EditProfile" class="mr-4 bg-transparent hover:bg-blue-400 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+              <div className="flex flex-row items-center my-5 justify-items-start">
+                <Link
+                  href="/EditProfile"
+                  class="mr-4 bg-transparent hover:bg-blue-400 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                >
                   Edit Profile
                 </Link>
               </div>
             </div>
             {/* Add more profile information as needed */}
           </div>
-          <div className="max-w-3xl w-full mx-auto bg-white p-5 my-5 border-0 rounded-lg px-10">
-            <p className="text-lg font-semibold  py-1">Skills</p>
+          <div className="w-full max-w-3xl p-5 px-10 mx-auto my-5 bg-white border-0 rounded-lg">
+            <p className="py-1 text-lg font-semibold">Skills</p>
             <div className="flex flex-wrap py-2">
               {dummyUser.skills.map((skill, index) => (
                 <div key={index} className="mr-4 text-xs text-gray-700">

@@ -1,6 +1,11 @@
 import React from "react";
 import Link from "next/link";
-const HeroSection = () => {
+import { getUserById } from "../../../lib/actions/user.action";
+const HeroSection = async () => {
+  const clerkid = "user_2boXqxcVUK1l7HQ71BwvfL62Ghx";
+  const result = getUserById(clerkid);
+  console.log(result);
+
   return (
     <div className="bg-[#1a1d23] min-h-screen text-white">
       <header className="py-20 text-center">

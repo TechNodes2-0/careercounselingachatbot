@@ -8,6 +8,10 @@ const UserSchema = new Schema({
   password: { type: String },
   picture: { type: String, required: true },
   joinedAt: { type: Date, default: Date.now },
+  educationLevel: { type: String, default: "" },
+  std: { type: String, default: "" },
+  interest: { type: String, default: "" },
+  achievement: { type: String, default: "" },
 });
 
 const User = models.User || model("User", UserSchema);

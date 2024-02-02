@@ -43,12 +43,12 @@ export async function deleteUser(clerkId) {
 export async function getUserById(clerkId) {
   try {
     connectToDatabase();
+    console.log("Printing from clerkid", clerkId);
+    const user = await User.findOne({ clerkId });
+    console.log(user);
+    if (!user) throw new Error("User not found");
 
-    const { userId } = params;
-
-    const user = await User.findOne({ clerkId});
-
-    return JSON.parse(JSON.stringify(user));
+    return user;
   } catch (error) {
     console.log(error);
   }
