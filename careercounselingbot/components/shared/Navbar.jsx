@@ -11,13 +11,13 @@ export default function Navbar() {
           aria-label="Global"
         >
           <div class="flex items-center justify-between">
-            <a
+            <Link
               class="flex-none text-xl font-semibold dark:text-white"
-              href="#"
+              href="/"
               aria-label="Brand"
             >
               Brand
-            </a>
+            </Link>
             <div class="sm:hidden">
               <button
                 type="button"
@@ -67,7 +67,7 @@ export default function Navbar() {
             <div class="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
               <Link
                 class="font-medium text-blue-600 sm:py-6 dark:text-blue-500"
-                href="#"
+                href="/Pathways"
                 aria-current="page"
               >
                 Paths
@@ -77,18 +77,6 @@ export default function Navbar() {
                 href="#"
               >
                 Profile
-              </Link>
-              <Link
-                class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500"
-                href="#"
-              >
-                Work
-              </Link>
-              <Link
-                class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500"
-                href="#"
-              >
-                Blog
               </Link>
 
               <div class="flex items-center gap-x-2 sm:ms-auto">
