@@ -29,10 +29,12 @@ const ProfilePage = async ({ params, searchParams }) => {
             />
           </div>
           <div className="px-10 pb-5 pt-14 max-md:px-5">
-            <p className="py-1 text-xl font-bold">{userInfo.name}</p>
-            <p className="py-1 text-sm font-semibold">{userInfo.discription}</p>
+            <p className="py-1 text-xl font-bold capitalize">{userInfo.name}</p>
+            <p className="py-1 text-sm font-semibold caption-top">
+              {userInfo?.educationLevel}
+            </p>
             <p className="py-1 text-sm font-medium text-gray-600">
-              {userInfo?.location}
+              {userInfo?.std}
             </p>
             <div className="flex flex-row items-center my-5 justify-items-start">
               <Link
