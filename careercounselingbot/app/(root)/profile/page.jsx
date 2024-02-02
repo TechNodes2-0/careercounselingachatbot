@@ -36,30 +36,33 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="px-10 mt-8">
+    <div className="px-10 mt-8 text-black w-full">
       {user ? (
-        <div className="mx-auto">
-          <div className="relative w-full">
+        <div className="max-w-3xl">
+          <div className="relative w-full border-0 rounded-sm">
             <img
               src="https://th.bing.com/th/id/OIP.5sZcGKaaTozYowjU7EZ2VgHaEo?rs=1&pid=ImgDetMain"
               alt=""
+              className=" border-0 rounded-md"
             />
             <img
-              className="absolute w-20 border-0 rounded-full -bottom-5 left-2"
+              className="absolute w-20 border-0 rounded-full -bottom-10 left-5"
               src={user.img}
               alt=""
             />
           </div>
-          <h1 className="text-2xl font-bold mb-4">{user.name}'s Profile</h1>
-          <p className="text-md font-semibold py-1"> {user.username}</p>
-          <p className="text-sm font-medium  py-1"> {user.discription}</p>
-          <p>
-            <span className="font-semibold">Email:</span> {user.email}
-          </p>
-          <p>
-            <span className="font-semibold">Joined At:</span>{" "}
-            {new Date(user.joinedAt).toLocaleString()}
-          </p>
+          <div className="py-10">
+            <p className="text-lg font-bold py-1"> {user.username}</p>
+            <p className="text-sm font-medium  py-1"> {user.discription}</p>
+            <p className="text-sm font-medium text-gray-600">
+              vadodara, Gujrat, India.
+            </p>
+            <div className="my-10">
+              <p>
+                <span className="font-semibold">Email:</span> {user.email}
+              </p>
+            </div>
+          </div>
           {/* Add more profile information as needed */}
         </div>
       ) : (
