@@ -4,7 +4,7 @@ import React from "react";
 export default function HeroSection() {
   return (
     <div>
-      <div className="bg-slate-900">
+      <div className="h-[750px] bg-slate-900">
         <div className="bg-gradient-to-b from-violet-600/[.15] via-transparent">
           <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8">
             <div className="max-w-3xl mx-auto text-center">
