@@ -1,50 +1,80 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <div>
-      <div className="h-[750px] bg-slate-900">
-        <div className="bg-gradient-to-b from-violet-600/[.15] via-transparent">
-          <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="block text-4xl font-medium text-gray-200 sm:text-5xl md:text-6xl lg:text-7xl">
-                Career Counseling Bot
-              </h1>
-            </div>
-
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-lg text-gray-400">
-                DevRoute Navigator focuses on technology ecosystems like React,
-                providing an interactive hierarchical tree structure.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <Link
-                className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-center text-white border border-transparent rounded-full shadow-lg gap-x-3 bg-gradient-to-tl from-blue-600 to-violet-600 shadow-transparent hover:shadow-blue-700/50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800"
-                href="/chatbot"
+    <section className="pt-24 bg-white">
+      <div className="px-12 mx-auto max-w-7xl">
+        <div className="w-full mx-auto text-left md:w-11/12 xl:w-9/12 md:text-center">
+          <h1 className="mb-8 text-4xl font-extrabold leading-none tracking-normal text-gray-900 md:text-6xl md:tracking-tight">
+            <span>Discover your</span>{" "}
+            <span className="block w-full py-2 text-transparent bg-clip-text leading-12 bg-gradient-to-r from-green-400 to-purple-500 lg:inline">
+              career path with
+            </span>{" "}
+            <span>personalized guidance.</span>
+          </h1>
+          <p className="px-0 mb-8 text-lg text-gray-600 md:text-xl lg:px-24">
+            Welcome to our Career Counseling Platform, where we illuminate
+            pathways to your professional aspirations with personalized guidance
+            and expertise.
+          </p>
+          <div className="mb-4 space-x-0 md:space-x-2 md:mb-8">
+            <a
+              href="#_"
+              className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-white bg-green-400 rounded-2xl sm:w-auto sm:mb-0"
+            >
+              Get Started
+              <svg
+                className="w-4 h-4 ml-1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
               >
-                Get started
-                <svg
-                  className="w-2.5 h-2.5"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                >
-                  <path
-                    d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round" // Corrected attribute name
-                  />
-                </svg>
-              </Link>
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="#_"
+              className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg bg-gray-100 rounded-2xl sm:w-auto sm:mb-0"
+            >
+              Learn More
+              <svg
+                className="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div className="w-full mx-auto mt-20 text-center md:w-10/12">
+          <div className="relative z-0 w-full mt-8">
+            <div className="relative overflow-hidden shadow-2xl">
+              <div className="flex items-center flex-none px-4 bg-green-400 rounded-b-none h-11 rounded-xl">
+                <div className="flex space-x-1.5">
+                  <div className="w-3 h-3 border-2 border-white rounded-full"></div>
+                  <div className="w-3 h-3 border-2 border-white rounded-full"></div>
+                  <div className="w-3 h-3 border-2 border-white rounded-full"></div>
+                </div>
+              </div>
+              <Image src="/Hero.png" width={1000} height={1000} />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
