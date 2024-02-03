@@ -35,30 +35,30 @@ const {userId}=auth;
   };
 
   return (
-    <div className="bg-gray-900">
+    <div className="bg-gray-100">
       {/* Comment Form */}
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <div className="max-w-2xl mx-auto">
           <div className="text-center">
-            <h2 className="text-xl font-bold text-gray-800 sm:text-3xl dark:text-white">
-              Tell us about yourself?
+            <h2 className="text-xl font-bold text-gray-800 sm:text-3xl dark:text-black">
+              Update Your Information
             </h2>
           </div>
 
           {/* Card */}
-          <div className="relative z-10 p-4 mt-5 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
+          <div className="relative z-10 p-4 mt-5 bg-white shadow-lg border rounded-xl sm:mt-10 md:p-10 dark:bg-white dark:border-gray-300">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="education-level"
-                  className="block mb-2 text-sm font-medium dark:text-white"
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 >
                   Level of Education:
                 </label>
                 <select
                   {...register("educationLevel")}
                   id="education-level"
-                  className="block w-full p-4 mt-1 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 form-select"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 >
                   <option value="">Select</option>
                   <option value="secondary">Secondary Education</option>
@@ -71,14 +71,14 @@ const {userId}=auth;
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="std"
-                  className="block mb-2 text-sm font-medium dark:text-white"
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 >
                   Standard:
                 </label>
                 <select
                   {...register("std")}
                   id="std"
-                  className="block w-full p-4 mt-1 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 form-select"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 >
                   <option value="">Select</option>
                   <option value="9">9th</option>
@@ -91,30 +91,30 @@ const {userId}=auth;
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="interest"
-                  className="block mb-2 text-sm font-medium dark:text-white"
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 >
                   Interest
                 </label>
                 <textarea
                   {...register("interest", { required: false, maxLength: 20 })}
                   id="interest"
-                  className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="What is Your Interest?"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                 placeholder="What is Your Interest?"
                 />
               </div>
 
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="achievement"
-                  className="block mb-2 text-sm font-medium dark:text-white"
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 >
                   Achievement
                 </label>
                 <textarea
                   {...register("achievement")}
                   id="achievement"
-                  className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
-                  placeholder="Tell Us about your achievement"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
+                 placeholder="Tell Us about your achievement"
                 />
               </div>
 
