@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
-  const { question } = await request.json();
-  const std="10th";
-  const   interest="science";
-  const   interest2="maths";
-  const   achievement="Silver Medalist in Olympiad";
+    const check=await request.json();
+  const { question,user } = check;
+  console.log(check);
+const {std,interest,achievement}=user;
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -20,7 +19,7 @@ export const POST = async (request) => {
             role: "system",
             content:
             `You are a career counselor  and a student comes to you for advice. They are unsure of what career path to take and are looking for guidance. What advice do you give them? based on that 
-              Student is studying in ${std} std and is interested in ${interest} and ${interest2} and has achievement of ${achievement}`
+              Student is studying in ${std} std and is interested in ${interest}  and has achievement of ${achievement}`
           },
           {
             role: "user",

@@ -1,16 +1,20 @@
 "use client";
+"use client";
 import axios from "axios";
 import React, { useEffect } from "react";
+import ChatMessage from "../../../components/shared/ChatMessage";
+import UserInput from "../../../components/shared/UserInput";
 import ChatMessage from "../../../components/shared/ChatMessage";
 import UserInput from "../../../components/shared/UserInput";
 import { useState } from "react";
 import getAnswer from "../../../lib/actions/bard.action";
 import { useAuth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.action";
+import { saveChatMessage, getChatMessages } from "@/lib/actions/chat.actions";
 import Image from "next/image";
-import { isObjectBindingPattern } from "typescript";
-
+import PromteSuggestion from "@/components/chatbot/PromteSuggestion";
 function page() {
+  const { userId } = useAuth();
   const { userId } = useAuth();
   const [messages, setMessages] = useState([]);
   const [user, setUser] = useState(null);
@@ -32,14 +36,38 @@ function page() {
       console.log(error);
     }
   };
+  const fetchChatMessages = async (userId) => {
+    try {
+      const chatMessages = await getChatMessages(userId);
+      console.log(chatMessages);
+      chatMessages.forEach((message) => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: message.question, sender: "user" },
+        ]);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: message.answer, sender: "bot" },
+        ]);
+      });
+      // setMessages(chatMessages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     fetchUser();
+    if (userId) {
+      console.log("fetching Messages");
+      fetchChatMessages(userId);
+    }
   }, []);
-  const getAnswerfromOpenAI = async (message) => {
+  const getAnswerfromOpenAI = async (message, user) => {
     try {
       const response = await axios.post("http://localhost:3000/api/chat", {
-        body: JSON.stringify({ question: message }),
+        question: message,
+        user,
       });
       const data = response.data;
       return data;
@@ -58,23 +86,31 @@ function page() {
   };
   const handleUserMessage = async (message) => {
     // Add the user's message to the chat display
-
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: message, sender: "user" },
     ]);
 
     // Send the user's message to the chatbot backend
-    const botResponse = await getAnswer(message);
+    const botResponse = await getAnswer(message, user);
 
     // Add the bot's response to the chat display
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: botResponse, sender: "bot" },
     ]);
+    saveChatMessage({
+      question: message,
+      answer: botResponse,
+      userId: user._id,
+    });
 
-    const gptresponse = await getAnswerfromOpenAI(message);
+    const gptresponse = await getAnswerfromOpenAI(message, user);
     console.log(gptresponse);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: gptresponse.reply, sender: "bot" },
+    ]);
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: gptresponse.reply, sender: "bot" },
@@ -83,22 +119,22 @@ function page() {
 
   return (
     <div className="flex h-screen antialiased text-gray-800">
-      <div className="flex flex-row h-full w-full overflow-x-hidden">
+      <div className="flex flex-row w-full h-full overflow-x-hidden">
         {/* SIdebar */}
-        <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 max-md:hidden">
-          <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
-            <div className="h-20 w-20 rounded-full border overflow-hidden">
-              <img src={user?.picture} alt="Avatar" className="h-full w-full" />
+        <div className="flex flex-col flex-shrink-0 w-64 py-8 pl-6 pr-2 bg-white max-md:hidden">
+          <div className="flex flex-col items-center w-full px-4 py-6 mt-4 bg-indigo-100 border border-gray-200 rounded-lg">
+            <div className="w-20 h-20 overflow-hidden border rounded-full">
+              <img src={user?.picture} alt="Avatar" className="w-full h-full" />
             </div>
-            <div className="text-sm font-semibold mt-2">{user?.name}</div>
+            <div className="mt-2 text-sm font-semibold">{user?.name}</div>
             <div className="text-xs text-gray-500">{user?.educationLevel}</div>
             <div className="text-xs text-gray-500">{user?.interest}</div>
           </div>
         </div>
 
         <div className="flex flex-col flex-auto h-full p-6">
-          <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
-            <div className="flex flex-col h-full overflow-x-auto mb-4">
+          <div className="flex flex-col flex-auto flex-shrink-0 h-full p-4 bg-gray-100 rounded-2xl">
+            <div className="flex flex-col h-full mb-4 overflow-x-auto">
               <div className="flex flex-col h-full">
                 <div className="grid grid-cols-12 gap-y-2">
                   {messages.map((message, index) => (
@@ -109,9 +145,9 @@ function page() {
                       sender={message.sender}
                     />
                   ))}
-                  {/* <div className="col-start-61col-end-13 p-3 rounded-lg">
-                    <div className="flex items-center justify-start flex-row-reverse">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
+                  {/* <div className="p-3 rounded-lg col-start-61col-end-13">
+                    <div className="flex flex-row-reverse items-center justify-start">
+                      <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-indigo-200 rounded-full">
                       <Image 
                 src={'https://cdn-icons-png.flaticon.com/512/6873/6873405.png' }
                 alt="Picture of the author"
@@ -119,7 +155,7 @@ function page() {
                 height={50}
                 />
                       </div>
-                      <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                      <div className="relative px-4 py-2 mr-3 text-sm bg-indigo-100 shadow rounded-xl">
                         <div>Are you exploring career options, seeking advice on job applications, or something else?</div>
                       </div>
                     </div>
@@ -128,21 +164,21 @@ function page() {
                   {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
 
                     <div className="flex flex-row items-center">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
+                      <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-indigo-200 rounded-full">
                       User
                       </div>
-                      <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
+                      <div className="relative px-4 py-2 ml-3 text-sm bg-white shadow rounded-xl">
                         <div>Hi there.</div>
                       </div>
                     </div>
                   </div>
 
                   <div className="col-start-6 col-end-13 p-3 rounded-lg">
-                    <div className="flex items-center justify-start flex-row-reverse">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
+                    <div className="flex flex-row-reverse items-center justify-start">
+                      <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-indigo-200 rounded-full">
                         A
                       </div>
-                      <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                      <div className="relative px-4 py-2 mr-3 text-sm bg-indigo-100 shadow rounded-xl">
                         <div>I'm ok what about you?</div>
                       </div>
                     </div>
@@ -150,21 +186,21 @@ function page() {
 
                   <div className="col-start-1 col-end-8 p-3 rounded-lg">
                     <div className="flex flex-row items-center">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
+                      <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-indigo-200 rounded-full">
                         A
                       </div>
-                      <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
+                      <div className="relative px-4 py-2 ml-3 text-sm bg-white shadow rounded-xl">
                         <div>Lorem ipsum dolor sit amet !</div>
                       </div>
                     </div>
                   </div> */}
 
                   {/* <div className="col-start-6 col-end-13 p-3 rounded-lg">
-                    <div className="flex items-center justify-start flex-row-reverse">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
+                    <div className="flex flex-row-reverse items-center justify-start">
+                      <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-indigo-200 rounded-full">
                         A
                       </div>
-                      <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                      <div className="relative px-4 py-2 mr-3 text-sm bg-indigo-100 shadow rounded-xl">
                         <div>
                           Lorem ipsum dolor sit, amet consectetur adipisicing. ?
                         </div>
@@ -174,10 +210,10 @@ function page() {
 
                   <div className="col-start-1 col-end-8 p-3 rounded-lg">
                     <div className="flex flex-row items-center">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
+                      <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-indigo-200 rounded-full">
                         A
                       </div>
-                      <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
+                      <div className="relative px-4 py-2 ml-3 text-sm bg-white shadow rounded-xl">
                         <div>
                           Lorem ipsum dolor sit amet consectetur adipisicing
                           elit. Perspiciatis, in.
@@ -189,7 +225,13 @@ function page() {
               </div>
             </div>
             {/* 
+            {/* 
           input field */}
+            <div className="">
+              <PromteSuggestion />
+            </div>
+            <UserInput onMessageSubmit={handleUserMessage} />
+            {/* <div className="flex flex-row items-center w-full h-16 px-4 bg-white rounded-xl">
             {isOpen && (
               <div className="max-h-56 rounded-xl bg-white w-full px-4 py-2 my-4">
                 <div className="hover:bg-gray-100 w-full my-2 py-2 px-2 rounded-lg">
@@ -229,9 +271,9 @@ function page() {
                 <div className="relative w-full">
                   <input
                     type="text"
-                    className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                    className="flex w-full h-10 pl-4 border rounded-xl focus:outline-none focus:border-indigo-300"
                   />
-                  <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
+                  <button className="absolute top-0 right-0 flex items-center justify-center w-12 h-full text-gray-400 hover:text-gray-600">
                     <svg
                       className="w-6 h-6"
                       fill="none"
@@ -250,11 +292,11 @@ function page() {
                 </div>
               </div>
               <div className="ml-4">
-                <button className="flex items-center justify-center bg-indigo-200 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0">
+                <button className="flex items-center justify-center flex-shrink-0 px-4 py-1 text-white bg-indigo-200 hover:bg-indigo-600 rounded-xl">
                   <span>Send</span>
                   <span className="ml-2">
                     <svg
-                      className="w-4 h-4 transform rotate-45 -mt-px"
+                      className="w-4 h-4 -mt-px transform rotate-45"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
