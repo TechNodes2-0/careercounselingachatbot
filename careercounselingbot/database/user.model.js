@@ -12,6 +12,7 @@ const UserSchema = new Schema({
   std: { type: String, default: "" },
   interest: { type: String, default: "" },
   achievement: { type: String, default: "" },
+  skill: { type: Object, default: {} },
 });
 
 const User = models.User || model("User", UserSchema);

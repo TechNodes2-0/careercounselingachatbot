@@ -8,6 +8,8 @@ const ProfilePage = async ({ params, searchParams }) => {
   const userInfo = await getUserById(params.id);
   console.log(userInfo);
 
+ 
+
   return (
     <div className="w-full min-h-screen px-10 py-10 pt-8 text-black bg-gray-200 max-md:px-5">
       <div>
@@ -39,6 +41,7 @@ const ProfilePage = async ({ params, searchParams }) => {
             <div className="flex flex-row items-center my-5 justify-items-start">
               <Link
                 href="/EditProfile"
+                
                 class="mr-4 bg-transparent hover:bg-blue-400 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
               >
                 Edit Profile

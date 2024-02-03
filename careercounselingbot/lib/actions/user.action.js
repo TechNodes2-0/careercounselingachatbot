@@ -12,11 +12,13 @@ export const createUser = async (user) => {
   }
 };
 
-export async function updateUser(clerkId, user) {
+export async function updateUser( user) {
   try {
     await connectToDatabase();
+    console.log("Printing from update user", user);
+    const{clerkId}=user;
 
-    const updatedUser = await User.findOneAndUpdate({ clerkId }, user, {
+    const updatedUser = await User.findOneAndUpdate({clerkId }, user, {
       new: true,
     });
 
@@ -45,6 +47,7 @@ export async function getUserById(clerkId) {
     connectToDatabase();
     console.log("Printing from clerkid", clerkId);
     const user = await User.findOne({ clerkId });
+    return JSON.parse(JSON.stringify(user));
     console.log(user);
     if (!user) throw new Error("User not found");
 
@@ -53,3 +56,4 @@ export async function getUserById(clerkId) {
     console.log(error);
   }
 }
+

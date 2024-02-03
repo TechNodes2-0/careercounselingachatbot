@@ -1,12 +1,30 @@
 "use client";
-import React from "react";
+import { updateUser, getUserById} from "@/lib/actions/user.action";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { auth } from "@clerk/nextjs";
 
-const EditProfile = () => {
-  const { control, register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+const EditProfile = ({user}) => {
+  const {educationLevel,std,interest,achievement}=user;
+  const { control, register, handleSubmit,setValue,reset } = useForm({
+    defaultValues: {
+      educationLevel,
+      std,
+      interest,
+      achievement,
+    },
+  });
+
+const {userId}=auth;
+
+
+
+  const onSubmit = async(data) => {
+    const{educationLevel,std,interest,achievement}=data;
+    const updatedUser={...user,educationLevel,std,interest,achievement};
+        await updateUser(updatedUser);
+        reset();
   };
 
   return (
