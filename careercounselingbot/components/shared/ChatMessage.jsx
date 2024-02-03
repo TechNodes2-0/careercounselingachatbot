@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
 const ChatMessage = ({ text, user,sender }) => {
 
 //   return (
@@ -29,7 +30,8 @@ const ChatMessage = ({ text, user,sender }) => {
                 />
               </div>
               <div className={`relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl`}>
-                <div>{text}</div>
+              <ReactMarkdown>{text}</ReactMarkdown>
+
               </div>
             </div>
           </div>

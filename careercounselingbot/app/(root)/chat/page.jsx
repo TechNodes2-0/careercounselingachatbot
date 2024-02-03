@@ -1,4 +1,5 @@
 "use client"
+import axios from "axios";
 import React, { useEffect } from "react";
 import ChatMessage from '../../../components/shared/ChatMessage';
 import UserInput from '../../../components/shared/UserInput';
@@ -6,6 +7,7 @@ import { useState } from "react";
 import getAnswer from '../../../lib/actions/bard.action';
 import { useAuth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.action";
+import Image from "next/image";
 function page() {
 const{userId} = useAuth();
   const [messages, setMessages] = useState([]);
@@ -26,6 +28,17 @@ const{userId} = useAuth();
   useEffect(() => {
     fetchUser();
   }, [])  
+  const getAnswerfromOpenAI = async (message) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/chat',{
+        body: JSON.stringify({ question: message }),
+      });
+      const data = response.data;
+  return data;
+    } catch (error) {
+      console.error('Error fetching data from the server:', error);
+    }
+  }
   // Function to handle user messages
   const handleUserMessage = async (message) => {
     // Add the user's message to the chat display
@@ -36,6 +49,10 @@ const{userId} = useAuth();
     
     // Add the bot's response to the chat display
     setMessages((prevMessages) => [...prevMessages, { text: botResponse, sender: 'bot' }]);
+
+    const gptresponse = await getAnswerfromOpenAI(message);
+    console.log(gptresponse);
+    setMessages((prevMessages) => [...prevMessages, { text: gptresponse.reply, sender: 'bot' }]);
   };
 
   return (
@@ -54,6 +71,7 @@ const{userId} = useAuth();
             </div>
             <div className="text-sm font-semibold mt-2">{user?.name}</div>
             <div className="text-xs text-gray-500">{user?.educationLevel}</div>
+            <div className="text-xs text-gray-500">{user?.interest}</div>
           </div>
         </div>
 
@@ -67,6 +85,23 @@ const{userId} = useAuth();
                 {messages.map((message, index) => (
     <ChatMessage key={index} text={message.text}  user={user} sender={message.sender} />
   ))}
+   {/* <div className="col-start-61col-end-13 p-3 rounded-lg">
+                    <div className="flex items-center justify-start flex-row-reverse">
+                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
+                      <Image 
+                src={'https://cdn-icons-png.flaticon.com/512/6873/6873405.png' }
+                alt="Picture of the author"
+                width={50}
+                height={50}
+                />
+                      </div>
+                      <div className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                        <div>Are you exploring career options, seeking advice on job applications, or something else?</div>
+                      </div>
+                    </div>
+                  </div> */}
+
+
                   {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
 
                     <div className="flex flex-row items-center">
