@@ -16,8 +16,8 @@ const EditProfile = ({user}) => {
       achievement,
     },
   });
-const router = useRouter();
-const {userId}=auth;
+
+
 
 
 
