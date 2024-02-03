@@ -1,6 +1,6 @@
 const careerPathwaysData = [
   {
-    title: "Career Pathways After 10th Std lol",
+    title: "Career Pathways After 10th Std",
     pathways: [
       {
         id: 1,
