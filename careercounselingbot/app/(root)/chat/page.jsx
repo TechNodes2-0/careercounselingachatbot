@@ -1,17 +1,27 @@
-"use client"
+"use client";
 import axios from "axios";
 import React, { useEffect } from "react";
-import ChatMessage from '../../../components/shared/ChatMessage';
-import UserInput from '../../../components/shared/UserInput';
+import ChatMessage from "../../../components/shared/ChatMessage";
+import UserInput from "../../../components/shared/UserInput";
 import { useState } from "react";
-import getAnswer from '../../../lib/actions/bard.action';
+import getAnswer from "../../../lib/actions/bard.action";
 import { useAuth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.action";
 import Image from "next/image";
+import { isObjectBindingPattern } from "typescript";
+
 function page() {
-const{userId} = useAuth();
+  const { userId } = useAuth();
   const [messages, setMessages] = useState([]);
-  const[user,setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isOpen, setOpen] = useState(false);
+
+  const toggle = () => {
+    setOpen(true);
+  };
+  const toggleoff = () => {
+    setOpen(false);
+  };
 
   const fetchUser = async () => {
     try {
@@ -19,55 +29,66 @@ const{userId} = useAuth();
       console.log(user);
       setUser(user);
     } catch (error) {
-
-    console.log(error)
-      
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchUser();
-  }, [])  
+  }, []);
   const getAnswerfromOpenAI = async (message) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/chat',{
+      const response = await axios.post("http://localhost:3000/api/chat", {
         body: JSON.stringify({ question: message }),
       });
       const data = response.data;
-  return data;
+      return data;
     } catch (error) {
-      console.error('Error fetching data from the server:', error);
+      console.error("Error fetching data from the server:", error);
     }
-  }
+  };
   // Function to handle user messages
+  const inputChange = (message) => {
+    console.log(message);
+    if (message === "/") {
+      toggle();
+    } else {
+      toggleoff();
+    }
+  };
   const handleUserMessage = async (message) => {
     // Add the user's message to the chat display
-    setMessages((prevMessages) => [...prevMessages, { text: message, sender: 'user' }]);
-    
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: message, sender: "user" },
+    ]);
+
     // Send the user's message to the chatbot backend
-    const botResponse =  await getAnswer(message);
-    
+    const botResponse = await getAnswer(message);
+
     // Add the bot's response to the chat display
-    setMessages((prevMessages) => [...prevMessages, { text: botResponse, sender: 'bot' }]);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: botResponse, sender: "bot" },
+    ]);
 
     const gptresponse = await getAnswerfromOpenAI(message);
     console.log(gptresponse);
-    setMessages((prevMessages) => [...prevMessages, { text: gptresponse.reply, sender: 'bot' }]);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: gptresponse.reply, sender: "bot" },
+    ]);
   };
 
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
-
-      {/* SIdebar */}
+        {/* SIdebar */}
         <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 max-md:hidden">
           <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
             <div className="h-20 w-20 rounded-full border overflow-hidden">
-              <img
-                src={user?.picture}
-                alt="Avatar"
-                className="h-full w-full"
-              />
+              <img src={user?.picture} alt="Avatar" className="h-full w-full" />
             </div>
             <div className="text-sm font-semibold mt-2">{user?.name}</div>
             <div className="text-xs text-gray-500">{user?.educationLevel}</div>
@@ -75,17 +96,20 @@ const{userId} = useAuth();
           </div>
         </div>
 
-
         <div className="flex flex-col flex-auto h-full p-6">
           <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
-        
             <div className="flex flex-col h-full overflow-x-auto mb-4">
               <div className="flex flex-col h-full">
                 <div className="grid grid-cols-12 gap-y-2">
-                {messages.map((message, index) => (
-    <ChatMessage key={index} text={message.text}  user={user} sender={message.sender} />
-  ))}
-   {/* <div className="col-start-61col-end-13 p-3 rounded-lg">
+                  {messages.map((message, index) => (
+                    <ChatMessage
+                      key={index}
+                      text={message.text}
+                      user={user}
+                      sender={message.sender}
+                    />
+                  ))}
+                  {/* <div className="col-start-61col-end-13 p-3 rounded-lg">
                     <div className="flex items-center justify-start flex-row-reverse">
                       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
                       <Image 
@@ -100,7 +124,6 @@ const{userId} = useAuth();
                       </div>
                     </div>
                   </div> */}
-
 
                   {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
 
@@ -165,9 +188,24 @@ const{userId} = useAuth();
                 </div>
               </div>
             </div>
-{/* 
+            {/* 
           input field */}
-          <UserInput   onMessageSubmit={handleUserMessage}/>
+            {isOpen && (
+              <div className="max-h-56 rounded-xl bg-white w-full px-4 py-2 my-4">
+                <div className="hover:bg-gray-100 w-full my-2 py-2 px-2 rounded-lg">
+                  <p className=" text-md text-black font-semibold">/gif</p>
+                  <p className=" text-sm text-gray-700">search animated gif</p>
+                </div>
+                <div className="hover:bg-gray-100 w-full my-2 py-2 px-2 rounded-lg">
+                  <p className=" text-md text-black font-semibold">/gif</p>
+                  <p className=" text-sm text-gray-700">search animated gif</p>
+                </div>
+              </div>
+            )}
+            <UserInput
+              onMessageSubmit={handleUserMessage}
+              onInputChange={inputChange}
+            />
             {/* <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
               <div>
                 <button className="flex items-center justify-center text-gray-400 hover:text-gray-600">
