@@ -42,7 +42,7 @@ const ProfilePage = async ({ params, searchParams }) => {
               <Link
                 href="/EditProfile"
                 
-                class="mr-4 bg-transparent hover:bg-blue-400 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                className="mr-4 bg-transparent hover:bg-blue-400 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
               >
                 Edit Profile
               </Link>

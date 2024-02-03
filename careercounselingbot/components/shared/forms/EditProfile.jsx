@@ -3,6 +3,7 @@ import { updateUser, getUserById} from "@/lib/actions/user.action";
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { auth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 
 const EditProfile = ({user}) => {
@@ -15,16 +16,22 @@ const EditProfile = ({user}) => {
       achievement,
     },
   });
-
+const router = useRouter();
 const {userId}=auth;
 
 
 
   const onSubmit = async(data) => {
+    try {
+      
     const{educationLevel,std,interest,achievement}=data;
     const updatedUser={...user,educationLevel,std,interest,achievement};
         await updateUser(updatedUser);
         reset();
+        router.back();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
