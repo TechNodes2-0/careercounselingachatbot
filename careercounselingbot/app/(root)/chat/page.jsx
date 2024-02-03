@@ -4,8 +4,6 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import ChatMessage from "../../../components/shared/ChatMessage";
 import UserInput from "../../../components/shared/UserInput";
-import ChatMessage from "../../../components/shared/ChatMessage";
-import UserInput from "../../../components/shared/UserInput";
 import { useState } from "react";
 import getAnswer from "../../../lib/actions/bard.action";
 import { useAuth } from "@clerk/nextjs";
@@ -14,7 +12,6 @@ import { saveChatMessage, getChatMessages } from "@/lib/actions/chat.actions";
 import Image from "next/image";
 import PromteSuggestion from "@/components/chatbot/PromteSuggestion";
 function page() {
-  const { userId } = useAuth();
   const { userId } = useAuth();
   const [messages, setMessages] = useState([]);
   const [user, setUser] = useState(null);
@@ -227,10 +224,25 @@ function page() {
             {/* 
             {/* 
           input field */}
+            {isOpen && (
+              <div className="max-h-56 rounded-xl bg-white w-full px-4 py-2 my-4">
+                <div className="hover:bg-gray-100 w-full my-2 py-2 px-2 rounded-lg">
+                  <p className=" text-md text-black font-semibold">/gif</p>
+                  <p className=" text-sm text-gray-700">search animated gif</p>
+                </div>
+                <div className="hover:bg-gray-100 w-full my-2 py-2 px-2 rounded-lg">
+                  <p className=" text-md text-black font-semibold">/gif</p>
+                  <p className=" text-sm text-gray-700">search animated gif</p>
+                </div>
+              </div>
+            )}
             <div className="">
               <PromteSuggestion />
             </div>
-            <UserInput onMessageSubmit={handleUserMessage} />
+            <UserInput
+              onMessageSubmit={handleUserMessage}
+              onInputChange={inputChange}
+            />
             {/* <div className="flex flex-row items-center w-full h-16 px-4 bg-white rounded-xl">
             {isOpen && (
               <div className="max-h-56 rounded-xl bg-white w-full px-4 py-2 my-4">
