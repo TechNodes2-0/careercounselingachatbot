@@ -1,37 +1,84 @@
-import React from "react";
-
+"use client"
+import React, { useEffect } from "react";
+import ChatMessage from '../../../components/shared/ChatMessage';
+import UserInput from '../../../components/shared/UserInput';
+import { useState } from "react";
+import getAnswer from '../../../lib/actions/bard.action';
+import { useAuth } from "@clerk/nextjs";
+import { getUserById } from "@/lib/actions/user.action";
 function page() {
+const{userId} = useAuth();
+  const [messages, setMessages] = useState([]);
+  const[user,setUser] = useState(null);
+
+  const fetchUser = async () => {
+    try {
+      const user = await getUserById(userId);
+      console.log(user);
+      setUser(user);
+    } catch (error) {
+
+    console.log(error)
+      
+    }
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, [])  
+  // Function to handle user messages
+  const handleUserMessage = async (message) => {
+    // Add the user's message to the chat display
+    setMessages((prevMessages) => [...prevMessages, { text: message, sender: 'user' }]);
+    
+    // Send the user's message to the chatbot backend
+    const botResponse =  await getAnswer(message);
+    
+    // Add the bot's response to the chat display
+    setMessages((prevMessages) => [...prevMessages, { text: botResponse, sender: 'bot' }]);
+  };
+
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
+
+      {/* SIdebar */}
         <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 max-md:hidden">
           <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
             <div className="h-20 w-20 rounded-full border overflow-hidden">
               <img
-                src="https://th.bing.com/th/id/OIP.j1kyrhQXjBlzrSP7wz_IKgHaHa?pid=ImgDet&w=181&h=181&c=7"
+                src={user?.picture}
                 alt="Avatar"
                 className="h-full w-full"
               />
             </div>
-            <div className="text-sm font-semibold mt-2">John Doe</div>
-            <div className="text-xs text-gray-500">Lead Web Designer</div>
+            <div className="text-sm font-semibold mt-2">{user?.name}</div>
+            <div className="text-xs text-gray-500">{user?.educationLevel}</div>
           </div>
         </div>
+
+
         <div className="flex flex-col flex-auto h-full p-6">
           <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
+        
             <div className="flex flex-col h-full overflow-x-auto mb-4">
               <div className="flex flex-col h-full">
                 <div className="grid grid-cols-12 gap-y-2">
-                  <div className="col-start-1 col-end-8 p-3 rounded-lg">
+                {messages.map((message, index) => (
+    <ChatMessage key={index} text={message.text}  user={user} sender={message.sender} />
+  ))}
+                  {/* <div className="col-start-1 col-end-8 p-3 rounded-lg">
+
                     <div className="flex flex-row items-center">
                       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
-                        A
+                      User
                       </div>
                       <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
                         <div>Hi there.</div>
                       </div>
                     </div>
                   </div>
+
                   <div className="col-start-6 col-end-13 p-3 rounded-lg">
                     <div className="flex items-center justify-start flex-row-reverse">
                       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
@@ -42,6 +89,7 @@ function page() {
                       </div>
                     </div>
                   </div>
+
                   <div className="col-start-1 col-end-8 p-3 rounded-lg">
                     <div className="flex flex-row items-center">
                       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
@@ -51,8 +99,9 @@ function page() {
                         <div>Lorem ipsum dolor sit amet !</div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-start-6 col-end-13 p-3 rounded-lg">
+                  </div> */}
+
+                  {/* <div className="col-start-6 col-end-13 p-3 rounded-lg">
                     <div className="flex items-center justify-start flex-row-reverse">
                       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
                         A
@@ -64,6 +113,7 @@ function page() {
                       </div>
                     </div>
                   </div>
+
                   <div className="col-start-1 col-end-8 p-3 rounded-lg">
                     <div className="flex flex-row items-center">
                       <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-200 flex-shrink-0">
@@ -76,11 +126,14 @@ function page() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
-            <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+{/* 
+          input field */}
+          <UserInput   onMessageSubmit={handleUserMessage}/>
+            {/* <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
               <div>
                 <button className="flex items-center justify-center text-gray-400 hover:text-gray-600">
                   <svg
@@ -91,9 +144,9 @@ function page() {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
                     ></path>
                   </svg>
@@ -114,9 +167,9 @@ function page() {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                       ></path>
                     </svg>
@@ -135,16 +188,16 @@ function page() {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                       ></path>
                     </svg>
                   </span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

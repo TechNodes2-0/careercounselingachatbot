@@ -23,7 +23,7 @@ export default function HeroSection() {
             <div className="text-center">
               <Link
                 className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-center text-white border border-transparent rounded-full shadow-lg gap-x-3 bg-gradient-to-tl from-blue-600 to-violet-600 shadow-transparent hover:shadow-blue-700/50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800"
-                href="/"
+                href="/chatbot"
               >
                 Get started
                 <svg
