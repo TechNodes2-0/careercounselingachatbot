@@ -19,6 +19,10 @@ const UserInput = ({ onMessageSubmit, onInputChange }) => {
     setMessage("");
   };
 
+  const handleSuggestionClick = (suggestion) => {
+    setMessage(suggestion);
+  };
+
   //   return (
   //     <form  onSubmit={handleSubmit} className="user-input-form flex justify-between items-center p-4 bg-gray-200 rounded-lg">
   //       <input
@@ -53,7 +57,7 @@ const UserInput = ({ onMessageSubmit, onInputChange }) => {
       </div>
       <div className="flex-grow ml-4">
         <div className="relative w-full">
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               value={message}
