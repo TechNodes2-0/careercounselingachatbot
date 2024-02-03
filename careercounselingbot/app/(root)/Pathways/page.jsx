@@ -1,11 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { getUserById } from "../../../lib/actions/user.action";
-const HeroSection = async () => {
-  const clerkid = "user_2boXqxcVUK1l7HQ71BwvfL62Ghx";
-  const result = getUserById(clerkid);
-  console.log(result);
 
+const HeroSection = async () => {
   return (
     <div className="bg-[#1a1d23] min-h-screen text-white">
       <header className="py-20 text-center">
@@ -27,27 +23,27 @@ const HeroSection = async () => {
       <section className="py-20">
         <div className="max-w-5xl px-8 mx-auto">
           <h2 className="mb-8 text-2xl font-semibold text-cyan-500">
-            Role Career Roadmaps
+            B.Tech Pathways
           </h2>
           <div className="grid grid-cols-3 gap-8">
-            <a
+            <Link
               className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center border border-[#30363d] hover:bg-[#30363d]"
               href="#"
             >
-              Frontend
-            </a>
-            <a
+              Computer Science
+            </Link>
+            <Link
               className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center border border-[#30363d] hover:bg-[#30363d]"
               href="#"
             >
-              Backend
-            </a>
-            <a
+              Electrical Engineering
+            </Link>
+            <Link
               className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center border border-[#30363d] hover:bg-[#30363d]"
               href="#"
             >
-              DevOps
-            </a>
+              Mechanical Engineering
+            </Link>
           </div>
         </div>
       </section>
