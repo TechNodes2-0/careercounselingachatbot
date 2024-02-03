@@ -1,5 +1,5 @@
 "use client";
-"use client";
+
 import axios from "axios";
 import React, { useEffect } from "react";
 import ChatMessage from "../../../components/shared/ChatMessage";
@@ -102,16 +102,10 @@ function page() {
       userId: user._id,
     });
 
-    const gptresponse = await getAnswerfromOpenAI(message, user);
-    console.log(gptresponse);
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: gptresponse.reply, sender: "bot" },
-    ]);
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: gptresponse.reply, sender: "bot" },
-    ]);
+
+    // const gptresponse = await getAnswerfromOpenAI(message,user);
+    // console.log(gptresponse);
+    // setMessages((prevMessages) => [...prevMessages, { text: gptresponse.reply, sender: 'bot' }]);
   };
 
   return (
@@ -227,12 +221,12 @@ function page() {
             {isOpen && (
               <div className="max-h-56 rounded-xl bg-white w-full px-4 py-2 my-4">
                 <div className="hover:bg-gray-100 w-full my-2 py-2 px-2 rounded-lg">
-                  <p className=" text-md text-black font-semibold">/gif</p>
-                  <p className=" text-sm text-gray-700">search animated gif</p>
+                  <p className=" text-md text-black font-semibold">/My Stats</p>
+                  <p className=" text-sm text-gray-700">Info about the user</p>
                 </div>
                 <div className="hover:bg-gray-100 w-full my-2 py-2 px-2 rounded-lg">
-                  <p className=" text-md text-black font-semibold">/gif</p>
-                  <p className=" text-sm text-gray-700">search animated gif</p>
+                  <p className=" text-md text-black font-semibold">/Progress</p>
+                  <p className=" text-sm text-gray-700">Achivements till in career path</p>
                 </div>
               </div>
             )}
