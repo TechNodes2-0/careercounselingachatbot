@@ -7,6 +7,7 @@ import { useState } from "react";
 import getAnswer from '../../../lib/actions/bard.action';
 import { useAuth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.action";
+import {saveChatMessage,getChatMessages} from "@/lib/actions/chat.actions";
 import Image from "next/image";
 function page() {
 const{userId} = useAuth();
@@ -24,14 +25,33 @@ const{userId} = useAuth();
       
     }
   }
+  const fetchChatMessages = async (userId) => {
+    try {
+      const chatMessages = await getChatMessages(userId);
+      console.log(chatMessages);
+      chatMessages.forEach((message) => {
+        setMessages((prevMessages) => [...prevMessages, { text: message.question, sender: 'user' }]);
+        setMessages((prevMessages) => [...prevMessages, { text: message.answer, sender: 'bot' }]);
+     
+      });
+      // setMessages(chatMessages);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     fetchUser();
+    if(userId)
+    {
+      console.log("fetching Messages");
+      fetchChatMessages(userId);
+    }
   }, [])  
-  const getAnswerfromOpenAI = async (message) => {
+  const getAnswerfromOpenAI = async (message,user) => {
     try {
       const response = await axios.post('http://localhost:3000/api/chat',{
-        body: JSON.stringify({ question: message }),
+       question: message ,user
       });
       const data = response.data;
   return data;
@@ -45,12 +65,14 @@ const{userId} = useAuth();
     setMessages((prevMessages) => [...prevMessages, { text: message, sender: 'user' }]);
     
     // Send the user's message to the chatbot backend
-    const botResponse =  await getAnswer(message);
+    const botResponse =  await getAnswer(message,user);
     
     // Add the bot's response to the chat display
     setMessages((prevMessages) => [...prevMessages, { text: botResponse, sender: 'bot' }]);
+    saveChatMessage({question: message, answer:botResponse, userId: user._id});
 
-    const gptresponse = await getAnswerfromOpenAI(message);
+
+    const gptresponse = await getAnswerfromOpenAI(message,user);
     console.log(gptresponse);
     setMessages((prevMessages) => [...prevMessages, { text: gptresponse.reply, sender: 'bot' }]);
   };
