@@ -28,7 +28,7 @@ const HeroSection = async () => {
           <div className="grid grid-cols-3 gap-8">
             <Link
               className="block py-4 px-6 bg-[#2b2d3a] rounded-md text-center border border-[#30363d] hover:bg-[#30363d]"
-              href="#"
+              href="/Pathways/ComputerScience"
             >
               Computer Science
             </Link>
