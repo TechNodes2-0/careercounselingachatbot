@@ -15,7 +15,7 @@ import CardDisplayer from "@/components/shared/CardDisplayer";
 function page() {
   const { userId } = useAuth();
   const [messages, setMessages] = useState([]);
-  const[cards,setCards]=useState([]);
+  const [cards, setCards] = useState([]);
   const [user, setUser] = useState(null);
   const [isOpen, setOpen] = useState(false);
 
@@ -38,7 +38,7 @@ function page() {
   };
   const fetchChatMessages = async (userId) => {
     try {
-      console.log(userId)
+      console.log(userId);
       const chatMessages = await getChatMessages(userId);
       console.log(chatMessages);
       chatMessages.forEach((message) => {
@@ -47,7 +47,7 @@ function page() {
         // // Parse the JSON response
         // const parsedResponse = JSON.parse(cleanedResponse);
         //     if(parsedResponse.cards){
-        
+
         //       const {cards}=parsedResponse;
         //       console.log(cards)
         //       setCards(cards);
@@ -69,7 +69,6 @@ function page() {
 
   useEffect(() => {
     fetchUser();
-   
   }, []);
   const getAnswerfromOpenAI = async (message, user) => {
     try {
@@ -102,8 +101,7 @@ function page() {
     // Send the user's message to the chatbot backend
     const botResponse = await getAnswer(message, user);
     console.log(botResponse);
- 
-    
+
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: botResponse, sender: "bot" },
@@ -133,10 +131,9 @@ function page() {
         <div className="flex flex-col flex-auto h-full p-6">
           <div className="flex flex-col flex-auto flex-shrink-0 h-full p-4 bg-gray-100 rounded-2xl">
             <div className="flex flex-col h-full mb-4 overflow-x-auto">
-              <div className="flex flex-col h-full">
-                <div className="grid grid-cols-12 gap-y-2">
+              <div className="">
+                <div className="flex flex-col">
                   {messages.map((message, index) => (
-
                     <ChatMessage
                       key={index}
                       text={message.text}
@@ -153,11 +150,11 @@ function page() {
             {isOpen && (
               <div className="w-full px-4 py-2 my-4 bg-white max-h-56 rounded-xl">
                 <div className="w-full px-2 py-2 my-2 rounded-lg hover:bg-gray-100">
-                  <p className="font-semibold text-black  text-md">/My Stats</p>
+                  <p className="font-semibold text-black text-md">/My Stats</p>
                   <p className="text-sm text-gray-700 ">Info about the user</p>
                 </div>
                 <div className="w-full px-2 py-2 my-2 rounded-lg hover:bg-gray-100">
-                  <p className="font-semibold text-black  text-md">/Progress</p>
+                  <p className="font-semibold text-black text-md">/Progress</p>
                   <p className="text-sm text-gray-700 ">
                     Achivements till in career path
                   </p>
