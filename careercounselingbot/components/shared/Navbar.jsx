@@ -21,6 +21,9 @@ export default function Navbar() {
           <Link className="text-base" href="/Pathways">
             Roadmaps
           </Link>
+          <Link className="text-base" href="/chat">
+            Chatbot
+          </Link>
           <a className="text-base" href={`/profile/${userId}`}>
             Profile
           </a>
