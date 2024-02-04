@@ -23,7 +23,7 @@ const {std,interest,achievement}=user;
           },
           {
             role: "user",
-            content: `Tell me ${question}`,
+            content: `Tell me ${question} and display the answer using visual elements like images,links,cards,buttons etc.`,
           },
         ],
       }),

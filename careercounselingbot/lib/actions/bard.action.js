@@ -16,7 +16,7 @@ export default async function getAnswer(prompt,user) {
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
   const templatePrompt=`You are a career counselor and a student comes to you for advice. They are unsure of what career path to take and are looking for guidance. What advice do you give them? based on that 
-  Student is studying in ${std} std and is interested in ${interest}  and has achievement of ${achievement}. Now answer this question.`+prompt;
+//   Student is studying in ${std} std and is interested in ${interest}  and has achievement of ${achievement}. Now answer this question  .`+prompt ;
 
   const result = await model.generateContent(templatePrompt);
   const response = await result.response;

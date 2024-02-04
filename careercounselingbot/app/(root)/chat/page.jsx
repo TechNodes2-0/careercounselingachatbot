@@ -11,9 +11,11 @@ import { getUserById } from "@/lib/actions/user.action";
 import { saveChatMessage, getChatMessages } from "@/lib/actions/chat.actions";
 import Image from "next/image";
 import PromteSuggestion from "@/components/chatbot/PromteSuggestion";
+import CardDisplayer from "@/components/shared/CardDIsplayer";
 function page() {
   const { userId } = useAuth();
   const [messages, setMessages] = useState([]);
+  const[cards,setCards]=useState([]);
   const [user, setUser] = useState(null);
   const [isOpen, setOpen] = useState(false);
 
@@ -28,6 +30,7 @@ function page() {
     try {
       const user = await getUserById(userId);
       console.log(user);
+      fetchChatMessages(user._id);
       setUser(user);
     } catch (error) {
       console.log(error);
@@ -35,9 +38,20 @@ function page() {
   };
   const fetchChatMessages = async (userId) => {
     try {
+      console.log(userId)
       const chatMessages = await getChatMessages(userId);
       console.log(chatMessages);
       chatMessages.forEach((message) => {
+        // const cleanedResponse = message.answer.replace(/`/g, '');
+
+        // // Parse the JSON response
+        // const parsedResponse = JSON.parse(cleanedResponse);
+        //     if(parsedResponse.cards){
+        
+        //       const {cards}=parsedResponse;
+        //       console.log(cards)
+        //       setCards(cards);
+        //     }
         setMessages((prevMessages) => [
           ...prevMessages,
           { text: message.question, sender: "user" },
@@ -55,10 +69,7 @@ function page() {
 
   useEffect(() => {
     fetchUser();
-    if (userId) {
-      console.log("fetching Messages");
-      fetchChatMessages(userId);
-    }
+   
   }, []);
   const getAnswerfromOpenAI = async (message, user) => {
     try {
@@ -90,8 +101,9 @@ function page() {
 
     // Send the user's message to the chatbot backend
     const botResponse = await getAnswer(message, user);
-
-    // Add the bot's response to the chat display
+    console.log(botResponse);
+ 
+    
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: botResponse, sender: "bot" },
@@ -102,11 +114,9 @@ function page() {
       userId: user._id,
     });
 
+   
+};
 
-    // const gptresponse = await getAnswerfromOpenAI(message,user);
-    // console.log(gptresponse);
-    // setMessages((prevMessages) => [...prevMessages, { text: gptresponse.reply, sender: 'bot' }]);
-  };
 
   return (
     <div className="flex h-screen antialiased text-gray-800">
@@ -129,6 +139,7 @@ function page() {
               <div className="flex flex-col h-full">
                 <div className="grid grid-cols-12 gap-y-2">
                   {messages.map((message, index) => (
+
                     <ChatMessage
                       key={index}
                       text={message.text}
@@ -136,6 +147,8 @@ function page() {
                       sender={message.sender}
                     />
                   ))}
+               <CardDisplayer cards={cards} />
+                      
                   {/* <div className="p-3 rounded-lg col-start-61col-end-13">
                     <div className="flex flex-row-reverse items-center justify-start">
                       <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-indigo-200 rounded-full">

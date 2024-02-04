@@ -24,10 +24,16 @@ export async function saveChatMessage  ({ question, answer, userId }) {
 };
 export async function getChatMessages  (userId)  {
     try {
-
+console.log("userID",userId);
 // console.log("ids",userId);
         await connectToDatabase();
-        const chatMessages = await ChatMessage.find({userId}).populate('user');
+        const chatMessages = await ChatMessage.aggregate([
+            {
+              $match: {
+                user: new mongoose.Types.ObjectId(userId) // Replace "yourUserId" with the actual userId you want to match against
+              }
+            }
+          ]);
         return JSON.parse(JSON.stringify(chatMessages));
     } catch (error) {
         console.error('Error getting chat messages:', error);

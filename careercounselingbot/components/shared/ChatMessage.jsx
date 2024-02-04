@@ -29,7 +29,8 @@ const ChatMessage = ({ text, user,sender }) => {
                 height={50}
                 />
               </div>
-              <div className={`relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl`}>
+              <div className={`relative ml-3 text-sm bg-white  max-w-2xl py-2 px-4 shadow rounded-xl`}>
+                
               <ReactMarkdown>{text}</ReactMarkdown>
 
               </div>
