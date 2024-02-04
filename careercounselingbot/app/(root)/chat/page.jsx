@@ -11,7 +11,7 @@ import { getUserById } from "@/lib/actions/user.action";
 import { saveChatMessage, getChatMessages } from "@/lib/actions/chat.actions";
 import Image from "next/image";
 import PromteSuggestion from "@/components/chatbot/PromteSuggestion";
-import CardDisplayer from "@/components/shared/CardDIsplayer";
+import CardDisplayer from "@/components/shared/CardDisplayer";
 function page() {
   const { userId } = useAuth();
   const [messages, setMessages] = useState([]);
