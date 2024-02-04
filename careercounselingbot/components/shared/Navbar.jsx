@@ -9,13 +9,15 @@ export default function Navbar() {
     <div className="text-white bg-slate-800">
       <nav className="flex justify-between items-center py-4 px-8 border-b border-[#2b2d3a]">
         <div className="flex items-center space-x-8">
-          <Image
-            src="https://cdn-icons-png.flaticon.com/512/6873/6873405.png"
-            className="h-8"
-            alt="Flowbite Logo"
-            width={32}
-            height={32}
-          />
+          <Link href="/">
+            <Image
+              src="https://cdn-icons-png.flaticon.com/512/6873/6873405.png"
+              className="h-8"
+              alt="logo"
+              width={32}
+              height={32}
+            />
+          </Link>
           <Link className="text-base" href="/Pathways">
             Roadmaps
           </Link>

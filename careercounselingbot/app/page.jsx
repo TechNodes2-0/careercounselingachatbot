@@ -9,7 +9,6 @@ function page() {
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
-      {/* <h2 className="font-bold text-sky-500"> AI chatbot</h2> */}
       <HeroSection />
       <Footer />
     </div>

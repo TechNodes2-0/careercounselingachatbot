@@ -5,10 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 
 const ProfilePage = async ({ params, searchParams }) => {
+  console.log(params);
   const userInfo = await getUserById(params.id);
   console.log(userInfo);
-
- 
 
   return (
     <div className="w-full min-h-screen px-10 py-10 pt-8 text-black bg-gray-200 max-md:px-5">
@@ -24,14 +23,19 @@ const ProfilePage = async ({ params, searchParams }) => {
             />
             <Image
               className="absolute w-24 border-0 rounded-full max-md:w-20 -bottom-10 left-10 max-md:left-5"
-              src={userInfo?.picture || "default-profile-image-url"} // replace with the actual user picture field
+              src={
+                userInfo?.picture ||
+                "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              } // replace with the actual user picture field
               alt=""
               width={100}
               height={100}
             />
           </div>
           <div className="px-10 pb-5 pt-14 max-md:px-5">
-            <p className="py-1 text-xl font-bold capitalize">{userInfo.name}</p>
+            <p className="py-1 text-xl font-bold capitalize">
+              {userInfo?.name}
+            </p>
             <p className="py-1 text-sm font-semibold caption-top">
               {userInfo?.educationLevel}
             </p>
@@ -41,8 +45,7 @@ const ProfilePage = async ({ params, searchParams }) => {
             <div className="flex flex-row items-center my-5 justify-items-start">
               <Link
                 href="/EditProfile"
-                
-                className="mr-4 bg-transparent hover:bg-blue-400 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                className="px-4 py-2 mr-4 font-semibold text-blue-700 bg-transparent border border-blue-500 rounded hover:bg-blue-400 hover:text-white hover:border-transparent"
               >
                 Edit Profile
               </Link>
@@ -51,11 +54,17 @@ const ProfilePage = async ({ params, searchParams }) => {
           {/* Add more profile information as needed */}
         </div>
         <div className="w-full max-w-3xl p-5 px-10 mx-auto my-5 bg-white border-0 rounded-lg">
-          <p className="py-1 text-lg font-semibold">Skills</p>
+          <p className="py-1 text-lg font-semibold">Achiments</p>
           <div className="flex flex-wrap py-2">
             <div className="mr-4 text-xs text-gray-700">
-              {/* {skill} */} Hiii
+              <p className="py-1 text-sm font-semibold">Top in LeetCode</p>
             </div>
+          </div>
+        </div>
+        <div className="w-full max-w-3xl p-5 px-10 mx-auto my-5 bg-white border-0 rounded-lg">
+          <p className="py-1 text-lg font-semibold">Interest</p>
+          <div className="flex flex-wrap py-2">
+            <div className="mr-4 text-xs text-gray-700">WebDevlopment</div>
           </div>
         </div>
       </div>
