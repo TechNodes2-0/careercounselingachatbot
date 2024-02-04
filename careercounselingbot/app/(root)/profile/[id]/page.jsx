@@ -54,17 +54,20 @@ const ProfilePage = async ({ params, searchParams }) => {
           {/* Add more profile information as needed */}
         </div>
         <div className="w-full max-w-3xl p-5 px-10 mx-auto my-5 bg-white border-0 rounded-lg">
-          <p className="py-1 text-lg font-semibold">Achiments</p>
+          <p className="py-1 text-lg font-semibold">Achievements</p>
           <div className="flex flex-wrap py-2">
             <div className="mr-4 text-xs text-gray-700">
-              <p className="py-1 text-sm font-semibold">Top in LeetCode</p>
+              <p className="py-1 text-sm font-semibold">
+                {userInfo?.achievement}
+              </p>
             </div>
           </div>
         </div>
         <div className="w-full max-w-3xl p-5 px-10 mx-auto my-5 bg-white border-0 rounded-lg">
           <p className="py-1 text-lg font-semibold">Interest</p>
           <div className="flex flex-wrap py-2">
-            <div className="mr-4 text-xs text-gray-700">WebDevlopment</div>
+            <div className="mr-4 text-xs text-gray-700"></div>
+            {userInfo?.interest}
           </div>
         </div>
       </div>

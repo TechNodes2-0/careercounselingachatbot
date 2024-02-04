@@ -1,14 +1,14 @@
 "use client";
-import { updateUser, getUserById} from "@/lib/actions/user.action";
+import { updateUser, getUserById } from "@/lib/actions/user.action";
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { auth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
-
-const EditProfile = ({user}) => {
-  const {educationLevel,std,interest,achievement}=user;
-  const { control, register, handleSubmit,setValue,reset } = useForm({
+const EditProfile = ({ user }) => {
+  const router = useRouter();
+  const { educationLevel, std, interest, achievement } = user;
+  const { control, register, handleSubmit, setValue, reset } = useForm({
     defaultValues: {
       educationLevel,
       std,
@@ -17,18 +17,19 @@ const EditProfile = ({user}) => {
     },
   });
 
-
-
-
-
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     try {
-      
-    const{educationLevel,std,interest,achievement}=data;
-    const updatedUser={...user,educationLevel,std,interest,achievement};
-        await updateUser(updatedUser);
-        reset();
-        router.back();
+      const { educationLevel, std, interest, achievement } = data;
+      const updatedUser = {
+        ...user,
+        educationLevel,
+        std,
+        interest,
+        achievement,
+      };
+      await updateUser(updatedUser);
+      reset();
+      router.back();
     } catch (error) {
       console.log(error);
     }
@@ -46,19 +47,19 @@ const EditProfile = ({user}) => {
           </div>
 
           {/* Card */}
-          <div className="relative z-10 p-4 mt-5 bg-white shadow-lg border rounded-xl sm:mt-10 md:p-10 dark:bg-white dark:border-gray-300">
+          <div className="relative z-10 p-4 mt-5 bg-white border shadow-lg rounded-xl sm:mt-10 md:p-10 dark:bg-white dark:border-gray-300">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="education-level"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 >
                   Level of Education:
                 </label>
                 <select
                   {...register("educationLevel")}
                   id="education-level"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-red-500 rounded appearance-none focus:outline-none focus:bg-white"
                 >
                   <option value="">Select</option>
                   <option value="secondary">Secondary Education</option>
@@ -71,14 +72,14 @@ const EditProfile = ({user}) => {
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="std"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 >
                   Standard:
                 </label>
                 <select
                   {...register("std")}
                   id="std"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-red-500 rounded appearance-none focus:outline-none focus:bg-white"
                 >
                   <option value="">Select</option>
                   <option value="9">9th</option>
@@ -91,30 +92,30 @@ const EditProfile = ({user}) => {
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="interest"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 >
                   Interest
                 </label>
                 <textarea
                   {...register("interest", { required: false, maxLength: 20 })}
                   id="interest"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                 placeholder="What is Your Interest?"
+                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-red-500 rounded appearance-none focus:outline-none focus:bg-white"
+                  placeholder="What is Your Interest?"
                 />
               </div>
 
               <div className="mb-4 sm:mb-8">
                 <label
                   htmlFor="achievement"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 >
                   Achievement
                 </label>
                 <textarea
                   {...register("achievement")}
                   id="achievement"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
-                 placeholder="Tell Us about your achievement"
+                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-red-500 rounded appearance-none focus:outline-none focus:bg-white"
+                  placeholder="Tell Us about your achievement"
                 />
               </div>
 
